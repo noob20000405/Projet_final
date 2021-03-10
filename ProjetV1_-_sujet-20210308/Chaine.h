@@ -1,7 +1,7 @@
 #ifndef __CHAINE_H__
 #define __CHAINE_H__	
 #include<stdio.h>
-//Hello 
+
 /* Liste chainee de points */
 typedef struct cellPoint{
   double x,y;                   /* Coordonnees du point */
