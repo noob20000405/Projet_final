@@ -109,7 +109,7 @@ Chaines* lectureChaines(FILE *f)
     sscanf(buf,")
   }
   
-
+sscanf 
   
 }
 
