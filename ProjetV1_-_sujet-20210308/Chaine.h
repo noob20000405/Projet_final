@@ -22,15 +22,8 @@ typedef struct {
   CellChaine *chaines;          /* La liste chainee des chaines */
 } Chaines;
 
-
-CellPoint * creer_cell_point(double x, double y);
-CellPoint * inserer_en_tete_cell_point(CellPoint* cp, CellPoint* aInserer);
-CellChaine * creer_cell_chaine(int n, CellPoint cp);
-CellChaine * inserer_en_tete_cell_chaine(CellChaine* cc, CellChaine* aInserer);
-Chaine * creer_chaine(int g, int nbC, CellChaine* cc);
-Chaine * inserer_en_tete_chaine(Chaine* c, CellChaine* cc);
-
-
+void libererCellChaine(CellChaine* cc);
+void libererCellChaine(CellChaine* cc);
 
 Chaines* lectureChaines(FILE *f);
 void ecrireChaines(Chaines *C, FILE *f);
