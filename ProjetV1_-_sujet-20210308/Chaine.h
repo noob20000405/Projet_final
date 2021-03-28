@@ -22,7 +22,7 @@ typedef struct {
 } Chaines;
 
 void libererCellChaine(CellChaine* cc); /*  */
-void libererCellChaine(CellChaine* cc);
+void libererChaines(Chaines* C);
 
 Chaines* lectureChaines(FILE *f);
 void ecrireChaines(Chaines *C, FILE *f);
