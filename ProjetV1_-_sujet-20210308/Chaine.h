@@ -1,6 +1,5 @@
 #ifndef __CHAINE_H__
 #define __CHAINE_H__	
-#include<stdio.h>
 
 /* Liste chainee de points */
 typedef struct cellPoint{
@@ -22,7 +21,7 @@ typedef struct {
   CellChaine *chaines;          /* La liste chainee des chaines */
 } Chaines;
 
-void libererCellChaine(CellChaine* cc);
+void libererCellChaine(CellChaine* cc); /*  */
 void libererCellChaine(CellChaine* cc);
 
 Chaines* lectureChaines(FILE *f);
