@@ -58,6 +58,7 @@ Fonctions :
 - Calcul du nombre de points : longueurTotale
 
 **RECONSTITUTION DU RESEAU**
+
 Reconstituer efficacement le réseau à partir des chaînes. 
 - Trouver la liste de nœuds du réseau (à une coordonnée un seul nœud) 
 - Identifier tous les câbles qui sont issus d’un nœud. (Conserver la liste des nœuds voisins à un nœud donné)
