@@ -24,6 +24,7 @@ void freeReseau(Reseau * r){
         r -> noeuds = r -> noeuds ->suiv;
         free(prec);
     }
+    free(r);
 }
 
 int main (void){
