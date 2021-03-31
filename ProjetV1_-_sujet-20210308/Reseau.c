@@ -71,7 +71,7 @@ Reseau* reconstitueReseauListe(Chaines *C) {
         estDejaVoisin = 0;
         voisin = nPrec -> voisins;
         while (voisin) {
-          if (nPrec == voisin -> nd) estDejaVoisin = 1;
+          if (n == voisin -> nd) estDejaVoisin = 1;
           voisin = voisin -> suiv;
         }
         if (!estDejaVoisin) {
@@ -151,7 +151,7 @@ void ecrireReseau(Reseau *R, FILE *f){
     fprintf(f, "NbNoeuds : %d\n", R -> nbNoeuds);
     fprintf(f, "NbLiaisons : %d\n", nbLiaisons(R));
     fprintf(f, "NbCommodites : %d\n", nbCommodites(R));
-    fprintf(f, "Gamma : %d\n", R -> gamma);
+    fprintf(f, "Gamma : %d\n\n", R -> gamma);
     
     CellNoeud * cn = R -> noeuds;
     Noeud * n = NULL;
@@ -160,6 +160,7 @@ void ecrireReseau(Reseau *R, FILE *f){
         fprintf(f, "v %d %.6f %.6f\n", n -> num, n -> x, n -> y);
         cn = cn -> suiv;
     }
+    fprintf(f, "\n");
     
     cn = R -> noeuds;
     CellNoeud * voisins = NULL;
@@ -177,6 +178,7 @@ void ecrireReseau(Reseau *R, FILE *f){
         }
         cn = cn -> suiv;
     }
+    fprintf(f, "\n");
     
     CellCommodite * k = R -> commodites;
     Noeud * ndA = NULL;
@@ -220,4 +222,3 @@ void afficheReseauSVG(Reseau *R, char* nomInstance){
     }
     SVGfinalize(&svg);
 }
-
