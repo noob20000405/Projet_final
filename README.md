@@ -59,19 +59,24 @@ Fonctions :
 
 **RECONSTITUTION DU RESEAU**
 Reconstituer efficacement le réseau à partir des chaînes. 
-    • Trouver la liste de nœuds du réseau (à une coordonnée un seul nœud) 
-    • Identifier tous les câbles qui sont issus d’un nœud. (Conserver la liste des nœuds voisins à un nœud donné)
-    • Récupérer et conserver la liste des commodités du réseau
+- Trouver la liste de nœuds du réseau (à une coordonnée un seul nœud) 
+- Identifier tous les câbles qui sont issus d’un nœud. (Conserver la liste des nœuds voisins à un nœud donné)
+- Récupérer et conserver la liste des commodités du réseau
 
 ### EXERCICE 2. Première méthode : stockage par liste chaînée
 
 But : Implémenter l’algorithme de reconstitution de réseau en codant l’ensemble des nœuds du réseau par une liste chaînée. 
 
 Nous utilisons : 
-    • Reseau : liste chaînée de Noued + liste chaînée de Commodite
-    • Nœud : numéro + ses coordonnées + liste chaînée des nœuds voisins (liés par un câble)
-    • Commodite : deux nœuds extremités de la châine 
+- Reseau : liste chaînée de Noued + liste chaînée de Commodite
+- Nœud : numéro + ses coordonnées + liste chaînée des nœuds voisins (liés par un câble)
+- Commodite : deux nœuds extremités de la châine 
     
 Fonctions : 
-    • Nœud* rechercheCreeNoeudListe(Reseau *R, double x, double y) ; (si on a (x,y) dans R nous retournons Nœud*, sinon nous créons le nœud avec (x,y) dans R)
-    • Reseau* reconstitueReseauListe(Chaines *C) ; qui reconstitue le réseau R à partir de la liste des chaînes C
+- Nœud* rechercheCreeNoeudListe(Reseau *R, double x, double y) ; (si on a (x,y) dans R nous retournons Nœud*, sinon nous créons le nœud avec (x,y) dans R)
+- Reseau* reconstitueReseauListe(Chaines *C) ; qui reconstitue le réseau R à partir de la liste des chaînes C
+- Main ReconstitueReseau.c
+
+### EXERCICE 3. Manipulation d’un réseau
+
+But : Construire des méthodes pour manipuler et afficher un struct Reseau
