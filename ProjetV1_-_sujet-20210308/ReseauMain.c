@@ -9,6 +9,23 @@
 #include <stdlib.h>
 #include "Reseau.h"
 
+void freeReseau(Reseau * r){
+    while(r -> noeuds){
+        Noeud * n = r -> nd;
+        CellNoeud * voisin = n -> voisins;
+        CellNoeud * prec = NULL;
+        while(voisin){
+            prec = voisin;
+            voisin = voisin -> suiv;
+            free(prec);
+        }
+        free(n);
+        prec = r -> noeuds;
+        r -> noeuds = r -> noeuds ->suiv;
+        free(prec);
+    }
+}
+
 int main (void){
     Reseau * r = (Reseau *)malloc(sizeof(Reseau));
     r -> nbNoeuds = 7;
@@ -186,4 +203,7 @@ int main (void){
     ecrireReseau(r,fOut);
     
     afficheReseauSVG(r, "test");
+        
+    freeReseau(r);
+    
 }
