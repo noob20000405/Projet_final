@@ -1,5 +1,7 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "Reseau.h"
+#include "SVGwriter.h"
 
 
 int nbCommodites(Reseau *R){
@@ -9,7 +11,7 @@ int nbCommodites(Reseau *R){
     CellCommodite* k = R -> commodites;
     
     int res = 0;
-    while (!k){
+    while (k != NULL){
         res++;
         k = k -> suiv;
     }
@@ -26,9 +28,9 @@ int nbLiaisons(Reseau * R){
     CellNoeud * v = NULL;
     
     int res = 0;
-    while(!n){
+    while(n != NULL){
         v = n -> nd -> voisins;
-        while(!v){
+        while(v != NULL){
             if( (v -> nd -> num) < (n -> nd -> num)){
                 res++;
             }
@@ -44,9 +46,9 @@ int nbLiaisons(Reseau * R){
 void ecrireReseau(Reseau *R, FILE *f){
     if(R == NULL) return;
     
-    fprintf(f, "NbNoeuds : %d\n", R -> NbNoeuds);
+    fprintf(f, "NbNoeuds : %d\n", R -> nbNoeuds);
     fprintf(f, "NbLiaisons : %d\n", nbLiaisons(R));
-    fprintf(f, "NbCommodites : %d\n", NbCommodites(R));
+    fprintf(f, "NbCommodites : %d\n", nbCommodites(R));
     fprintf(f, "Gamma : %d\n", R -> gamma);
     
     CellNoeud * cn = R -> noeuds;
@@ -81,7 +83,7 @@ void ecrireReseau(Reseau *R, FILE *f){
         ndA = k -> extrA;
         ndB = k -> extrB;
         fprintf(f, "k %d %d \n", ndA -> num, ndB -> num);
-        k -> k -> suiv;
+        k = k -> suiv;
     }
     
     return;
@@ -116,3 +118,4 @@ void afficheReseauSVG(Reseau *R, char* nomInstance){
     }
     SVGfinalize(&svg);
 }
+
