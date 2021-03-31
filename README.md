@@ -7,3 +7,5 @@ Les câbles relient deux points du plan : un point peut être client ou concent
 Les tronçons de fibres optiques ainsi reliés bout à bout forment alors des chaînes dans le réseau. 
 Une chaîne relie deux pointes du plan : commodité (extrémités de la chaîne). 
 Il existe plusieurs opérateurs dans l’agglomération et chaque opérateur possède plusieurs chaînes de fibres optiques. 
+
+![image](https://raw.githubusercontent.com/noob20000405/readme_pic/master/projet_final_l2/reseau.png)
