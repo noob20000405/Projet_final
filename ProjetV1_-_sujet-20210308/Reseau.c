@@ -3,6 +3,108 @@
 #include "Reseau.h"
 #include "SVGwriter.h"
 
+Noeud* rechercheCreeNoeudListe(Reseau *R, double x, double y) {
+  if (!R) return NULL;
+  
+  CellNoeud * cn = R -> noeuds;
+  while (cn) {
+    if (x == cn -> nd -> x && y == cn -> nd -> y) return cn -> nd;
+    cn = cn -> suiv;
+  }
+  /* Si on ne l'a pas trouve dans la liste, on l'ajoute */
+  Noeud * nAjoute = (Noeud *)malloc(sizeof(Noeud));
+  nAjoute -> num = (R -> nbNoeuds + 1);
+  nAjoute -> x = x;
+  nAjoute -> y = y;
+  nAjoute -> voisins = NULL;
+  
+  CellNoeud * cnAjoute = (CellNoeud *)malloc(sizeof(CellNoeud));
+  cnAjoute -> nd = nAjoute;
+  cnAjoute -> suiv = R -> noeuds;
+  R -> noeuds = cnAjoute;
+  R -> nbNoeuds++;
+  
+  return cnAjoute -> nd;
+}
+
+
+Reseau* reconstitueReseauListe(Chaines *C) {
+  if (!C) return NULL;
+
+  /* Creer le reseau */
+  Reseau * r = (Reseau *)malloc(sizeof(Reseau));
+  r -> nbNoeuds = 0;
+  r -> gamma = C -> gamma;
+  r -> commodites = NULL;
+  
+  CellCommodite * ccommo = NULL;
+  Noeud * n  = NULL;
+  Noeud * nPrec = NULL;
+  /* CellNoeud pour conserver les voisins */
+  CellNoeud * cn = NULL;
+  /* CellNoeud pour parcourir les voisins */
+  CellNoeud * voisin = NULL;
+  /* Un entier qui represente si un noeud est deja un voisin de l'autre */
+  int estDejaVoisin = 0;
+	
+  CellChaine * cc = C -> chaines;
+  CellPoint * cp = NULL;
+  
+  int num = 0;
+  int numP = 0; // Numero de points dans chaque chaine
+
+  while (cc) {
+    cp = cc -> points;
+    numP = 0;
+    nPrec = NULL;
+    n = NULL;
+    /* On cree une commodite chaque fois au debut d'un parcourt d'une chaine */
+    ccommo = (CellCommodite *)malloc(sizeof(CellCommodite));
+    while (cp) {
+      /* On conserve le noeud precedent */
+      nPrec = n;
+      /* On cree un noeud et l'ajoute dans le reseau */
+      n = rechercheCreeNoeudListe(r, cp -> x, cp -> y);
+      /* On ajoute les voisins */
+      if (nPrec) {
+        /* Teste si ce noeud est deja un voisin de l'autre */
+        estDejaVoisin = 0;
+        voisin = nPrec -> voisins;
+        while (voisin) {
+          if (nPrec == voisin -> nd) estDejaVoisin = 1;
+          voisin = voisin -> suiv;
+        }
+        if (!estDejaVoisin) {
+          /* 1. Ajouter nPrec comme un voisin de n */
+          cn = (CellNoeud *)malloc(sizeof(CellNoeud));
+          cn -> nd = nPrec;
+          cn -> suiv = n -> voisins;
+          n -> voisins = cn;
+          /* 2. Ajouter n comme un voisins de nPrec */
+          cn = (CellNoeud *)malloc(sizeof(CellNoeud));
+          cn -> nd = n;
+          cn -> suiv = nPrec -> voisins;
+          nPrec -> voisins = cn;
+        }
+      }
+      /* On teste si ce noeud est l'extrA */
+      if (numP == 0) {
+        ccommo -> extrA = n;
+      } 
+      numP++;
+      cp = cp -> suiv;
+    }
+    /* On ajoute le commodite dans la liste */
+    ccommo -> extrB = n;
+    ccommo -> suiv = r -> commodites;
+    r -> commodites = ccommo;
+    
+    cc = cc -> suiv;
+  }
+  
+  return r;
+}
+
 
 int nbCommodites(Reseau *R){
     
