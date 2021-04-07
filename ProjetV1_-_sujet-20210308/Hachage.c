@@ -60,7 +60,7 @@ Reseau* reconstitueReseauHachage(Chaines *C, int M){
     TableHachage * H = (TableHachage *)malloc(sizeof(TableHachage));
     H -> nE = 0;
     H -> m = M;
-    H -> tabN = (CellNoeud**)malloc(sizeof(M * CellNoeud*));
+    H -> tabN = (CellNoeud**)malloc(M * sizeof(CellNoeud*));
     
     Reseau * r = reconstitueReseauListe(C);
     r -> gamma = C -> gamma;
