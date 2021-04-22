@@ -327,4 +327,5 @@ void libereArbreQuat(ArbreQuat * a) {
     libereArbreQuat(a -> se);
     libereArbreQuat(a -> no);
     libereArbreQuat(a -> ne);
+    free(a);
 }
