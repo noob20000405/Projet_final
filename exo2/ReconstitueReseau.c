@@ -22,8 +22,8 @@ int main(int argc, char * argv[]) {
         case 1:
             fOut = fopen("reseauListe.txt", "w");
             r = reconstitueReseauListe(c);
-            //afficheReseauSVG(r, "reseauListe");这两个里面有1个block lost
-            //ecrireReseau(r, fOut);
+            afficheReseauSVG(r, "reseauListe");
+            ecrireReseau(r, fOut);
             libereReseauListe(r);
             break;
         case 2:
@@ -31,12 +31,14 @@ int main(int argc, char * argv[]) {
             r = reconstitueReseauHachage(c, comptePointsTotal(c));
             afficheReseauSVG(r, "reseauHachage");
             ecrireReseau(r, fOut);
+            libereReseauListe(r);
             break;
         case 3:
             fOut = fopen("reseauArbre.txt", "w");
             r = reconstitueReseauArbre(c);
             afficheReseauSVG(r, "reseauArbre");
             ecrireReseau(r, fOut);
+            libereReseauListe(r);
             break;
     }
     

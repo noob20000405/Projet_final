@@ -55,8 +55,6 @@ Reseau* reconstitueReseauListe(Chaines *C) {
   CellCommodite * ccommo = NULL;
   Noeud * n  = NULL;
   Noeud * nPrec = NULL;
-  /* CellNoeud pour conserver les voisins */
-  CellNoeud * cn = NULL;
 	
   CellChaine * cc = C -> chaines;
   CellPoint * cp = NULL;
