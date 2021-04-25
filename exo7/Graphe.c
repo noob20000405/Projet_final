@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "Graphe.h"
 #include "Reseau.h"
+#include "Chaine.h"
 
 
 Graphe * creerGraphe(Reseau * r){
@@ -11,7 +12,7 @@ Graphe * creerGraphe(Reseau * r){
     g -> nbcommod = nbCommodites(r);
     
     //Nous cherchons a creer le tableau de sommets
-    Sommet ** t_som = (Sommet **)malloc(g -> nbsom * sizeof(Sommet*));
+    Sommet ** t_som = (Sommet **)malloc((g -> nbsom + 1) * sizeof(Sommet*));
     CellNoeud * cn = r -> noeuds;
     Noeud * nd = NULL;
     CellNoeud * voisins = NULL;
@@ -33,23 +34,24 @@ Graphe * creerGraphe(Reseau * r){
             num = voisins -> nd -> num;
             //Nous comparons les numeros des sommets pour determiner si on a deja vu le voisin
             if(num <= nd -> num){ //Si c'est la première fois qu'on rencontre cet arete, nous allouons l'arete et nous l'initialisons
-                Arete * a = (Arete *)malloc(sizeof(Arete));
-                a -> u = nd -> num;
-                a -> v = num;
+                Arete * a_nouv = (Arete *)malloc(sizeof(Arete));
+                a_nouv -> u = nd -> num;
+                a_nouv -> v = num;
             } else {    // si ce n'est pas la première fois, nous le trouvons dans la liste des voisins du sommet u
                 Sommet * voisin_deja_vu = t_som[num];
                 while(voisin_deja_vu -> L_voisin != NULL){
                     Arete * a_vvoisin = voisin_deja_vu -> L_voisin -> a;
                     //On cherche l'arete qui a pour numero = le numero du sommet v
+                    Arete * a_nouv = NULL;
                     if(a_vvoisin -> v == num){
-                        Arete * a = a_vvoisin;
+                        a_nouv = a_vvoisin;
                     }
                     voisin_deja_vu -> L_voisin = voisin_deja_vu -> L_voisin -> suiv;
                 }
             }
             //Nous ajoutons l'arete dans la liste de voisins
             Cellule_arete * ca2 = (Cellule_arete *)malloc(sizeof(Cellule_arete));
-            ca2 -> a = a;
+            ca2 -> a = a_nouv;
             ca2 -> suiv = ca;
             ca = ca2;
         }
@@ -58,14 +60,14 @@ Graphe * creerGraphe(Reseau * r){
         cn = cn -> suiv;
     }
     
-    g -> T_som = t_som
+    g -> T_som = t_som;
     
     //Nous cherchons a creer la liste de comodites en parcourant la liste de commodites du reseau
     Commod * t_commod = (Commod *)malloc(g -> nbcommod * sizeof(Commod));
     CellCommodite * commodites = r -> commodites;
     int i = 0;
     while(commodites != NULL){
-        Commod k = (Commod)malloc(sizeof(Commod));
+        Commod k;
         k.e1 = commodites -> extrA -> num;
         k.e2 = commodites -> extrB -> num;
         t_commod[i] = k;
@@ -76,7 +78,7 @@ Graphe * creerGraphe(Reseau * r){
     g -> T_commod = t_commod;
 
     //Finalement, nous avons initialise tous les parametres du graphe, nous le retournons.
-    return g
+    return g;
 }
 
 
@@ -84,7 +86,7 @@ Graphe * creerGraphe(Reseau * r){
 
 int plusPetitNbAretes(Graphe * G, int r, int s){
     //Nous initialisons un tableau visit qui nous donne la longueur de la chaîne de r à visit[i]
-    int visit[nbsom];
+    int visit[G -> nbsom];
     int i;
     for (i = 0; i < G -> nbsom; i++){
         visit[i] = 0;
@@ -92,9 +94,9 @@ int plusPetitNbAretes(Graphe * G, int r, int s){
     //Nous initialisons la bordure du graphe avec une file
     S_file * F = (S_file *)malloc(sizeof(S_file));
     Init_file(F);
-    enfile(f,r);
+    enfile(F,r);
 
-    while(!estFileVide){
+    while(!estFileVide(F)){
         //A chaque fois on prend un sommet u et on regarde ses sommets adjacents
         int u = defile(F);
         /*printf("%d ", u);*/
@@ -137,9 +139,9 @@ ListeEntier * plusCourteChaineUV(Graphe * G, int r, int s){
     ListeEntier * res = (ListeEntier *)malloc(sizeof(ListeEntier));
     Init_Liste(res);
     
-    int visit[nbsom];
+    int visit[G -> nbsom];
     //Nous creons un tableau prec pour pouvoir retourner du sommet v au sommet u et remplir notre liste d'entiers
-    int prec[nbsom];
+    int prec[G -> nbsom];
     int i;
     for (i = 0; i < G -> nbsom; i++){
         visit[i] = 0;
@@ -148,9 +150,9 @@ ListeEntier * plusCourteChaineUV(Graphe * G, int r, int s){
     }
     S_file * F = (S_file *)malloc(sizeof(S_file));
     Init_file(F);
-    enfile(f,r);
+    enfile(F,r);
 
-    while(!estFileVide){
+    while(!estFileVide(F)){
         int u = defile(F);
         Cellule_arete * voisins = G -> T_som[u] -> L_voisin;
         while(voisins != NULL){
@@ -174,10 +176,10 @@ ListeEntier * plusCourteChaineUV(Graphe * G, int r, int s){
                     //A chaque tour, nous revennons "a l'arriere" grace au tableau prec et on obtiendra la liste d'entiers de la plus courte chaine de u a v.
                     while(prec[temp] != -1){
                         ajoute_en_tete(res, temp);
-                        temp = prec[temp]
+                        temp = prec[temp];
                     }
                     ajoute_en_tete(res,temp);
-                    return res
+                    return res;
                 }
             }
             voisins = voisins -> suiv;
@@ -188,7 +190,7 @@ ListeEntier * plusCourteChaineUV(Graphe * G, int r, int s){
 
 //Question 7.4.
 
-int reorganiserReseau(Reseau * r){
+int reorganiseReseau(Reseau * r){
     Graphe * g = creerGraphe(r);
     //On déclare et initialise la matrice
     int ** matArete = (int **)malloc(g -> nbsom * sizeof(int*));
@@ -198,7 +200,7 @@ int reorganiserReseau(Reseau * r){
     for (int i = 0; i < g -> nbsom; i++){
         matArete[i] = (int *)malloc(g -> nbsom * sizeof(int));
         if(matArete[i] == NULL){
-            for(j = 0; j < i; i++){
+            for(int j = 0; j < i; i++){
                 free(matArete[j]);
                 
             }
@@ -206,20 +208,20 @@ int reorganiserReseau(Reseau * r){
             return -1;
         }
     }
-    for(int j; j < g -> nbsom; j++){
-        for(int k; k < g -> nbsom; k++){
+    for(int j = 0; j < g -> nbsom; j++){
+        for(int k = 0; k < g -> nbsom; k++){
             matArete[j][k] = 0;
         }
     }
     
     //On parcours la table de commodites
     Commod * tabCommod = g -> T_commod;
-    Commod k = NULL;
+    Commod k;
     for(int l = 0; l < g -> nbcommod; l++){
         k = tabCommod[l];
         //On regarde la plus courte chaine qui relie les deux extremites de la commodite
         ListeEntier * LEtemp = plusCourteChaineUV(g, k.e1, k.e2);
-        ListeEntier * parcours = LEtemp
+        ListeEntier * parcours = LEtemp;
         //Nous ajoutons les aretes dans la matrice matArete
         while(parcours != NULL){
             matArete[parcours -> u][parcours -> suiv -> u];
@@ -236,19 +238,19 @@ int reorganiserReseau(Reseau * r){
             //Si le nombre est superieur a gamma, on retoune Faux
             if(aretes > g -> gamma){
                 freeMAT(matArete, g -> nbsom);
-                return False;
+                return 0;
             }
         }
     }
     
     freeMAT(matArete, g -> nbsom);
     //On retourne vrai si gamma est bien respectee.
-    return True
+    return 1;
     
 }
 
 void freeMAT(int ** matrice, int taille){
-    for(int i = 0; i < taille, i++){
+    for(int i = 0; i < taille; i++){
         free(matrice[i]);
     }
     free(matrice);
