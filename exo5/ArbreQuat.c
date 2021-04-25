@@ -207,6 +207,8 @@ Noeud* rechercheCreeNoeudArbre(Reseau* R, ArbreQuat** a, ArbreQuat* parent, doub
     else {
         rechercheCreeNoeudArbre(R, &(arbre -> ne), arbre, x, y);
     }
+
+    return NULL;
 }
 
 
