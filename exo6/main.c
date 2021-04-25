@@ -6,9 +6,9 @@
 #include "Hachage.h"
 #include "ArbreQuat.h"
 
+
+/* Q 6.1 */
 int main(void) {
-    srand((unsigned)time(NULL));
-  
     clock_t temps_initial;
     clock_t temps_final;
     double temps_cpu;
@@ -27,10 +27,9 @@ int main(void) {
     
     /* Liste */
     fprintf(fOut, "liste    ");
-    
     /* Instance 1 : 00014_burma.cha */
     temps_initial = clock();
-    r = reconstitueReseauListe(c1);
+    r = reconstitueReseauListe(c1); 
     temps_final = clock();
     temps_cpu = ((double)(temps_final - temps_initial)) / CLOCKS_PER_SEC;
     fprintf(fOut, "%f      ", temps_cpu);
@@ -52,9 +51,86 @@ int main(void) {
     fprintf(fOut, "%f      \n", temps_cpu);
     libereReseauListe(r);
     
+
     /* Table hachage */
+    /* M = 1500 */
+    fprintf(fOut, "table hachage (taille 1500)    ");
+    /* Instance 1 : 00014_burma.cha */
+    temps_initial = clock();
+    r = reconstitueReseauHachage(c1, 1500);
+    temps_final = clock();
+    temps_cpu = ((double)(temps_final - temps_initial)) / CLOCKS_PER_SEC;
+    fprintf(fOut, "%f      ", temps_cpu);
+    libereReseauListe(r);
+    
+    /* Instance 2 : 05000_USA-road-d-NY.cha */
+    temps_initial = clock();
+    r = reconstitueReseauHachage(c2, 1500);
+    temps_final = clock();
+    temps_cpu = ((double)(temps_final - temps_initial)) / CLOCKS_PER_SEC;
+    fprintf(fOut, "%f      ", temps_cpu);
+    libereReseauListe(r);
+    
+    /* Instance 3 : 07397_pla.cha */
+    temps_initial = clock();
+    r = reconstitueReseauHachage(c3, 1500);
+    temps_final = clock();
+    temps_cpu = ((double)(temps_final - temps_initial)) / CLOCKS_PER_SEC;
+    fprintf(fOut, "%f      \n", temps_cpu);
+    libereReseauListe(r);
+    
+    /* M = 3000 */
+    fprintf(fOut, "table hachage (taille 3000)    ");
+    /* Instance 1 : 00014_burma.cha */
+    temps_initial = clock();
+    r = reconstitueReseauHachage(c1, 3000);
+    temps_final = clock();
+    temps_cpu = ((double)(temps_final - temps_initial)) / CLOCKS_PER_SEC;
+    fprintf(fOut, "%f      ", temps_cpu);
+    libereReseauListe(r);
+    
+    /* Instance 2 : 05000_USA-road-d-NY.cha */
+    temps_initial = clock();
+    r = reconstitueReseauHachage(c2, 3000);
+    temps_final = clock();
+    temps_cpu = ((double)(temps_final - temps_initial)) / CLOCKS_PER_SEC;
+    fprintf(fOut, "%f      ", temps_cpu);
+    libereReseauListe(r);
+    
+    /* Instance 3 : 07397_pla.cha */
+    temps_initial = clock();
+    r = reconstitueReseauHachage(c3, 3000);
+    temps_final = clock();
+    temps_cpu = ((double)(temps_final - temps_initial)) / CLOCKS_PER_SEC;
+    fprintf(fOut, "%f      \n", temps_cpu);
+    libereReseauListe(r);
     
     /* Arbre */
+    fprintf(fOut, "arbre    ");
+    
+    /* Instance 1 : 00014_burma.cha */
+    temps_initial = clock();
+    r = reconstitueReseauArbre(c1);
+    temps_final = clock();
+    temps_cpu = ((double)(temps_final - temps_initial)) / CLOCKS_PER_SEC;
+    fprintf(fOut, "%f      ", temps_cpu);
+    libereReseauListe(r);
+    
+    /* Instance 2 : 05000_USA-road-d-NY.cha */
+    temps_initial = clock();
+    r = reconstitueReseauArbre(c2);
+    temps_final = clock();
+    temps_cpu = ((double)(temps_final - temps_initial)) / CLOCKS_PER_SEC;
+    fprintf(fOut, "%f      ", temps_cpu);
+    libereReseauListe(r);
+    
+    /* Instance 3 : 07397_pla.cha */
+    temps_initial = clock();
+    r = reconstitueReseauArbre(c3);
+    temps_final = clock();
+    temps_cpu = ((double)(temps_final - temps_initial)) / CLOCKS_PER_SEC;
+    fprintf(fOut, "%f      \n", temps_cpu);
+    libereReseauListe(r);
     
     libererChaines(c1);
     libererChaines(c2);
