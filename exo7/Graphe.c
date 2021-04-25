@@ -1,81 +1,122 @@
 #include <stdio.h>
-#include "Graphe.h"
+#include <stdlib.h>
+
+#include "Struct_File.h"
+#include "Struct_Liste.h"
 #include "Reseau.h"
 #include "Chaine.h"
+#include "Graphe.h"
 
 
 Graphe * creerGraphe(Reseau * r){
     //Nous allouons le Graphe g et initialisons les parametres prets dans Reseau r
     Graphe * g = (Graphe *)malloc(sizeof(Graphe));
+    //Test malloc
+    if(!g){
+        printf("Erreur lors de l'allocation Graphe.\n");
+        return NULL;
+    }
     g -> nbsom = r -> nbNoeuds;
     g -> gamma = r -> gamma;
     g -> nbcommod = nbCommodites(r);
     
     //Nous cherchons a creer le tableau de sommets
-    Sommet ** t_som = (Sommet **)malloc((g -> nbsom + 1) * sizeof(Sommet*));
-    CellNoeud * cn = r -> noeuds;
-    Noeud * nd = NULL;
-    CellNoeud * voisins = NULL;
-    int num = 0;
+    Sommet ** g_tabSommets = (Sommet **)malloc((g -> nbsom) * sizeof(Sommet*));
+    //Test malloc
+    if(!g_tabSommets){
+        free(g);
+        printf("Erreur lors de l'allocation TableauSommets.\n");
+        return NULL;
+    }
+    //Nous initialisons le tableau de sommets 
+    for(int i = 0; i < g -> nbsom; i++){
+        g_tabSommets[i] = NULL;
+    }
+    
+    CellNoeud * r_cn = r -> noeuds;
+    Noeud * r_nd = NULL;
+    CellNoeud * r_voisins = NULL;
+    int r_numVoisin = 0;
     
     //Pour cela, nous parcourons la liste de noeuds du reseau
-    while(cn != NULL){
-        nd = cn -> nd;
-        voisins = nd -> voisins;
+    while(r_cn != NULL){
+        r_nd = r_cn -> nd;
+        r_voisins = r_nd -> voisins;
+        
         //Nous creons le sommet
-        Sommet * s = (Sommet *)malloc(sizeof(Sommet));
-        s -> num = nd -> num;
-        s -> x = nd -> x;
-        s -> y = nd -> y;
+        Sommet * g_sommet = (Sommet *)malloc(sizeof(Sommet));
+        //Test malloc
+        if(!g_sommet){
+            for(int i = 0; i < g -> nbsom; i++){
+                if(g_tabSommets[i]){
+                    free(g_tabSommets[i]);
+                }
+            }
+            free(g_tabSommets);
+            free(g);
+            printf("Erreur lors de l'allocation d'un sommet.\n");
+            return NULL;
+        }
+        
+        //Nous initialisons le numero de sommet par numero du noeud dans le reseau -1 car l'indice du tableau commence par 0
+        g_sommet -> num = r_nd -> num - 1;
+        g_sommet -> x = r_nd -> x;
+        g_sommet -> y = r_nd -> y;
         
         //Nous cherchons a trouver la liste de voisins de chaque sommet a partir de la liste de voisins du reseau
-        Cellule_arete * ca = (Cellule_arete *)malloc(sizeof(Cellule_arete));
-        while (voisins) {
-            num = voisins -> nd -> num;
+        Cellule_arete * g_ca = (Cellule_arete *)malloc(sizeof(Cellule_arete));
+        g_sommet -> L_voisin = g_ca;
+        while (r_voisins) {
+            r_numVoisin = r_voisins -> nd -> num;
+            Arete * g_areteNouv = NULL;
+            
             //Nous comparons les numeros des sommets pour determiner si on a deja vu le voisin
-            if(num <= nd -> num){ //Si c'est la première fois qu'on rencontre cet arete, nous allouons l'arete et nous l'initialisons
-                Arete * a_nouv = (Arete *)malloc(sizeof(Arete));
-                a_nouv -> u = nd -> num;
-                a_nouv -> v = num;
+            if(r_numVoisin <= r_nd -> num){ //Si c'est la première fois qu'on rencontre cet arete, nous allouons l'arete et nous l'initialisons
+                g_areteNouv = (Arete *)malloc(sizeof(Arete));
+                g_areteNouv -> u = r_nd -> num - 1;
+                g_areteNouv -> v = r_numVoisin - 1;
             } else {    // si ce n'est pas la première fois, nous le trouvons dans la liste des voisins du sommet u
-                Sommet * voisin_deja_vu = t_som[num];
-                while(voisin_deja_vu -> L_voisin != NULL){
-                    Arete * a_vvoisin = voisin_deja_vu -> L_voisin -> a;
+                Sommet * g_voisinDejaVu = g_tabSommets[r_numVoisin - 1];
+                Arete * g_areteDejaVu = NULL;
+                while(g_voisinDejaVu -> L_voisin != NULL){
+                    g_areteDejaVu = g_voisinDejaVu -> L_voisin -> a;
                     //On cherche l'arete qui a pour numero = le numero du sommet v
-                    Arete * a_nouv = NULL;
-                    if(a_vvoisin -> v == num){
-                        a_nouv = a_vvoisin;
+                    if(g_areteDejaVu && (g_areteDejaVu -> v == r_nd -> num - 1)){
+                        g_areteNouv = g_areteDejaVu;
+                        break;
                     }
-                    voisin_deja_vu -> L_voisin = voisin_deja_vu -> L_voisin -> suiv;
+                    g_voisinDejaVu -> L_voisin = g_voisinDejaVu -> L_voisin -> suiv;
                 }
             }
             //Nous ajoutons l'arete dans la liste de voisins
-            Cellule_arete * ca2 = (Cellule_arete *)malloc(sizeof(Cellule_arete));
-            ca2 -> a = a_nouv;
-            ca2 -> suiv = ca;
-            ca = ca2;
+            Cellule_arete * g_ca2 = (Cellule_arete *)malloc(sizeof(Cellule_arete));
+            g_ca2 -> a = g_areteNouv;
+            g_ca2 -> suiv = g_ca;
+            g_ca = g_ca2;
+            g_sommet -> L_voisin = g_ca;
+            r_voisins = r_voisins -> suiv;
         }
         //Nous ajoutons le sommet dans le tableau de sommets
-        t_som[s -> num] = s;
-        cn = cn -> suiv;
+        g_tabSommets[g_sommet -> num] = g_sommet;
+        r_cn = r_cn -> suiv;
     }
     
-    g -> T_som = t_som;
+    g -> T_som = g_tabSommets;
     
     //Nous cherchons a creer la liste de comodites en parcourant la liste de commodites du reseau
-    Commod * t_commod = (Commod *)malloc(g -> nbcommod * sizeof(Commod));
-    CellCommodite * commodites = r -> commodites;
+    Commod * g_tabCommod = (Commod *)malloc(g -> nbcommod * sizeof(Commod));
+    CellCommodite * r_commodites = r -> commodites;
     int i = 0;
-    while(commodites != NULL){
-        Commod k;
-        k.e1 = commodites -> extrA -> num;
-        k.e2 = commodites -> extrB -> num;
-        t_commod[i] = k;
+    while(r_commodites != NULL){
+        Commod g_k;
+        g_k.e1 = r_commodites -> extrA -> num;
+        g_k.e2 = r_commodites -> extrB -> num;
+        g_tabCommod[i] = g_k;
         i++;
-        commodites = commodites -> suiv;
+        r_commodites = r_commodites -> suiv;
     }
     
-    g -> T_commod = t_commod;
+    g -> T_commod = g_tabCommod;
 
     //Finalement, nous avons initialise tous les parametres du graphe, nous le retournons.
     return g;
@@ -102,14 +143,14 @@ int plusPetitNbAretes(Graphe * G, int r, int s){
         /*printf("%d ", u);*/
         
         //Nous regardons les aretes du sommet u
-        Cellule_arete * voisins = G -> T_som[u] -> L_voisin;
-        while(voisins != NULL){
+        Cellule_arete * g_voisins = G -> T_som[u] -> L_voisin;
+        while(g_voisins != NULL){
             //Nous choisissont le bon sommet v de l'arete, exemple arete 1-4, si u = 4, nous retournons 1 et sinon , nous retournons 4.
             int v = 0;
-            if(voisins -> a -> v == u){
-                v = voisins -> a -> u;
+            if(g_voisins -> a -> v == u){
+                v = g_voisins -> a -> u;
             } else {
-                v = voisins -> a -> v;
+                v = g_voisins -> a -> v;
             }
             //Si nous n'avons jamais parcouru le sommet (visit[v] == 0) ou s'il est different du sommet de depart (racine)
             if(visit[v] == 0 && v != r){
@@ -125,10 +166,11 @@ int plusPetitNbAretes(Graphe * G, int r, int s){
                     return visit[s];
                 }
             }
-            voisins = voisins -> suiv;
+            g_voisins = g_voisins -> suiv;
         }
 
     }
+    return visit[s];
 }
 
 //Question 7.3
@@ -154,13 +196,13 @@ ListeEntier * plusCourteChaineUV(Graphe * G, int r, int s){
 
     while(!estFileVide(F)){
         int u = defile(F);
-        Cellule_arete * voisins = G -> T_som[u] -> L_voisin;
-        while(voisins != NULL){
+        Cellule_arete * g_voisins = G -> T_som[u] -> L_voisin;
+        while(g_voisins != NULL){
             int v = 0;
-            if(voisins -> a -> v == u){
-                v = voisins -> a -> u;
+            if(g_voisins -> a -> v == u){
+                v = g_voisins -> a -> u;
             } else {
-                v = voisins -> a -> v;
+                v = g_voisins -> a -> v;
             }
             if(visit[v] == 0 && v != r){
                 visit[v] = visit[u] + 1;
@@ -182,10 +224,11 @@ ListeEntier * plusCourteChaineUV(Graphe * G, int r, int s){
                     return res;
                 }
             }
-            voisins = voisins -> suiv;
+            g_voisins = g_voisins -> suiv;
         }
 
     }
+    return res;
 }
 
 //Question 7.4.
@@ -193,12 +236,12 @@ ListeEntier * plusCourteChaineUV(Graphe * G, int r, int s){
 int reorganiseReseau(Reseau * r){
     Graphe * g = creerGraphe(r);
     //On déclare et initialise la matrice
-    int ** matArete = (int **)malloc(g -> nbsom * sizeof(int*));
+    int ** matArete = (int **)malloc((g -> nbsom) * sizeof(int*));
     if(matArete == NULL){    //si l'allocation échoue
         return -1;
     }
-    for (int i = 0; i < g -> nbsom; i++){
-        matArete[i] = (int *)malloc(g -> nbsom * sizeof(int));
+    for (int i = 0; i < g -> nbsom + 1; i++){
+        matArete[i] = (int *)malloc((g -> nbsom) * sizeof(int));
         if(matArete[i] == NULL){
             for(int j = 0; j < i; i++){
                 free(matArete[j]);
@@ -223,9 +266,9 @@ int reorganiseReseau(Reseau * r){
         ListeEntier * LEtemp = plusCourteChaineUV(g, k.e1, k.e2);
         ListeEntier * parcours = LEtemp;
         //Nous ajoutons les aretes dans la matrice matArete
-        while(parcours != NULL){
-            matArete[parcours -> u][parcours -> suiv -> u];
-            parcours = parcours -> suiv;
+        while((*parcours) -> suiv != NULL){
+            matArete[(*parcours) -> u][(*parcours) -> suiv -> u]++;
+            *parcours = (*parcours) -> suiv;
         }
         desalloue(LEtemp);
     }
@@ -243,7 +286,7 @@ int reorganiseReseau(Reseau * r){
         }
     }
     
-    freeMAT(matArete, g -> nbsom);
+    freeMAT(matArete, g -> nbsom + 1);
     //On retourne vrai si gamma est bien respectee.
     return 1;
     
