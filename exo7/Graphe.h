@@ -1,9 +1,11 @@
 #ifndef __GRAPHE_H__
 #define __GRAPHE_H__
-#include<stdlib.h>
-#include<stdio.h>
-#include "Struct_Liste.h"
+#include <stdio.h>
+#include <stdlib.h>
+
 #include "Struct_File.h"
+#include "Struct_Liste.h"
+#include "Reseau.h"
 
 typedef struct{
   int u,v;        /* Numeros des sommets extremité */
@@ -40,12 +42,14 @@ typedef struct{
 Graphe * creerGraphe(Reseau * r);
 
 /*Nous calculons le plus petit nombre d'aretes d'une chaine entre 2 sommets u et v*/
-int plusPetitNbArretes(Graphe * G, int r, int s);
+int plusPetitNbAretes(Graphe * G, int r, int s);
 
 /*Nous retournons la plus courte chaine entre les sommets u et v*/
 ListeEntier * plusCourteChaineUV(Graphe * G, int r, int s);
 
 /*Nous créons le graphe, pour chaque commodité nous cherchons sa plus courte chaîne et nous regardons si le nombre gamma est verifiee*/
-int reorganiserReseau(Reseau * r);
+int reorganiseReseau(Reseau * r);
+
+void freeMAT(int ** matrice, int taille);
 
 #endif
