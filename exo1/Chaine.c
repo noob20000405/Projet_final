@@ -42,17 +42,17 @@ void libererChaines(Chaines* C){
 
 
 /* Q 1.1 */
-Chaines* lectureChaines(FILE * f)
-{  
+Chaines* lectureChaines(FILE * f){  
   char buf[5000];
-  double x, y; //lecture CellPoint
-  int nbPoints; // nombre de points dans une Cellchaine
-  int num; //lecture CellChaine
-  int gamma, nbChaines; //lecture Chaine
+  //Variables declarees pour la lecture de la structure Chaines
+  double x, y;
+  int nbPoints; 
+  int num; 
+  int gamma, nbChaines; 
   
-  //Création ensemble de chaînes 
+  //Création l'ensemble de chaînes 
   Chaines *C = (Chaines *) malloc(sizeof(Chaines));
-  if(!C){
+  if(!C){ //Test malloc
     printf("Erreur lors de l'allocation Chaines.\n");
     return NULL;
   }
@@ -68,18 +68,20 @@ Chaines* lectureChaines(FILE * f)
   C -> gamma = gamma;
   C -> chaines = NULL;
  
-  //lecture de chaînes
+  //Boucle pour lecture de chaines (CellChaine)
   for(int i = 0; i < C -> nbChaines; i++){
-    char points[5000];
+    //Nous gardons dans cette variable la suite de la ligne qui n'a pas encore ete lu avec c
+    char points[5000]; 
     
-    //Création liste de chaînes
+    //Création de liste chainee de chaines 
     CellChaine* cc = (CellChaine*)malloc(sizeof(CellChaine));
-    if(!cc){
+    if(!cc){ //Test malloc
       printf("Erreur lors de l'allocation CellChaine.\n");
       libererChaines(C);
       return NULL;
     }
     
+    //Nous lisons les deux premiers variables pour pouvoir determiner la boucle qui lit les CellPoint
     fgets(buf, 5000, f);
     buf[strlen(buf) - 1] = '\0';
     sscanf(buf, "%d %d %[^\n]\n", &num, &nbPoints, points);
@@ -93,9 +95,9 @@ Chaines* lectureChaines(FILE * f)
       sscanf(points, "%lf %lf %[^\n]\n", &x, &y, points);
       printf("%.2f %.2f ", x, y); /* Test */
        
-      //Création de points
+      //Création de points (CellPoint)
       CellPoint* cp = (CellPoint*)malloc(sizeof(CellPoint));
-      if(!cp){
+      if(!cp){ //Test malloc
         printf("Erreur lors de l'allocation CellPoint.\n");
         libererCellChaine(cc);
         libererChaines(C);
@@ -140,7 +142,7 @@ void ecrireChaines(Chaines * C, FILE * f) {
     }
     fprintf(f, "%d %d ", cc -> numero, nbP);
     
-    /* On parcourt la deuxieme fois pour ecrire les coordonnees */
+    /* On parcourt une deuxieme fois pour ecrire les coordonnees */
     cp = cc -> points;
     while (cp) {
       fprintf(f, "%.2f %.2f ", cp -> x, cp -> y);
@@ -198,6 +200,7 @@ double longueurChaine(CellChaine * c) {
   if (!c) return 0;
   CellPoint * cp_cur = c -> points;
   CellPoint * cp_suiv = cp_cur -> suiv;
+  
   /* Longueur qu'on va retourner */
   double lg = 0;
   
