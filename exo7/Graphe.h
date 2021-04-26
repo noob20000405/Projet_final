@@ -50,6 +50,11 @@ ListeEntier * plusCourteChaineUV(Graphe * G, int r, int s);
 /*Nous créons le graphe, pour chaque commodité nous cherchons sa plus courte chaîne et nous regardons si le nombre gamma est verifiee*/
 int reorganiseReseau(Reseau * r);
 
+/* Afficher le graphe, pour tester */
+void afficherGraphe(Graphe * G);
+
 void freeMAT(int ** matrice, int taille);
+
+void libererGraphe(Graphe * g);
 
 #endif
