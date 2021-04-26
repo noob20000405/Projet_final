@@ -4,25 +4,6 @@
 
 
 /* Q 4.2 */
-void libereTableHachage(TableHachage * H) {
-    if (!H) return ;
-    
-    CellNoeud * cnCour = NULL;
-    CellNoeud * cnPrec = NULL;
-    for (int i = 0 ; i < H -> m ; i++) {
-        cnPrec = NULL;
-        cnCour = (H -> tabN)[i];
-        while (cnCour) {
-            cnPrec = cnCour;
-            cnCour = cnCour -> suiv;
-            free(cnPrec);
-        }
-    }
-    
-    free(H -> tabN);
-    free(H);
-}
-
 double fonctionClef(double x, double y){
     return y + (x + y) * (x + y + 1) * 1.0 / 2;
 }
@@ -31,7 +12,7 @@ double fonctionClef(double x, double y){
 /* Q 4.3 */
 int fonctionHachage(double k, int m) {
   double A = (sqrt(5) - 1) / 2;
-  return ((int)(m * (k * A - ((long int)(k * A)))));/////////////////
+  return ((int)(m * (k * A - ((long int)(k * A)))));
 }
 
 
@@ -128,4 +109,22 @@ Reseau* reconstitueReseauHachage(Chaines *C, int M){
     
     libereTableHachage(H);
     return r;
+}
+
+void libereTableHachage(TableHachage * H) {
+    if (!H) return ;
+    
+    CellNoeud * cnCour = NULL;
+    CellNoeud * cnPrec = NULL;
+    for (int i = 0 ; i < H -> m ; i++) {
+        cnPrec = NULL;
+        cnCour = (H -> tabN)[i];
+        while (cnCour) {
+            cnPrec = cnCour;
+            cnCour = cnCour -> suiv;
+            free(cnPrec);
+        }
+    }
+    free(H -> tabN);
+    free(H);
 }
