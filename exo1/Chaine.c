@@ -2,44 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+
 #include "Chaine.h"
 #include "SVGwriter.h"
-
-void libererCellChaine(CellChaine * cc){
-  if(!cc){
-    return;
-  }
-  
-  CellPoint * cpCour = cc -> points;
-  CellPoint * cpPrec;
-
-  while(cpCour){
-    cpPrec = cpCour;
-    cpCour = cpCour -> suiv;
-    free(cpPrec);
-  }
-  
-  free(cc);
-  return;
-}
-
-void libererChaines(Chaines* C){
-  if(!C){
-    return;
-  }
-  CellChaine * ccCour = C -> chaines;
-  CellChaine * ccPrec;
-
-  while(ccCour){
-    ccPrec = ccCour;
-    ccCour = ccCour -> suiv;
-    libererCellChaine(ccPrec);
-  }
-  
-  free(C);
-  return;
-}
-
 
 /* Q 1.1 */
 Chaines* lectureChaines(FILE * f){  
@@ -117,7 +82,6 @@ Chaines* lectureChaines(FILE * f){
     
     printf("\n"); /* Test */
   }
-
     return C;
 }
 
@@ -209,7 +173,6 @@ double longueurChaine(CellChaine * c) {
     cp_cur = cp_suiv;
     cp_suiv = cp_suiv -> suiv;
   }
-  
   return lg;
 }
 
@@ -273,7 +236,6 @@ int comptePointsTotal(Chaines *C) {
     free(cp_cmp);
     cp_cmp = cp_suiv;
   }
-  
   return nb;
 }
 
@@ -306,6 +268,41 @@ Chaines* generationAleatoire(int nbChaines,int nbPointsChaine,int xmax, int ymax
             cc -> points = cp;
         }
     }
-    
     return cs;
+}
+
+
+void libererCellChaine(CellChaine * cc){
+  if(!cc){
+    return;
+  }
+  
+  CellPoint * cpCour = cc -> points;
+  CellPoint * cpPrec;
+
+  while(cpCour){
+    cpPrec = cpCour;
+    cpCour = cpCour -> suiv;
+    free(cpPrec);
+  }
+  
+  free(cc);
+  return;
+}
+
+void libererChaines(Chaines* C){
+  if(!C){
+    return;
+  }
+  CellChaine * ccCour = C -> chaines;
+  CellChaine * ccPrec;
+
+  while(ccCour){
+    ccPrec = ccCour;
+    ccCour = ccCour -> suiv;
+    libererCellChaine(ccPrec);
+  }
+  
+  free(C);
+  return;
 }
