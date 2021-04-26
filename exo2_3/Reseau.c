@@ -230,15 +230,6 @@ void afficheReseauSVG(Reseau *R, char* nomInstance){
 void libereReseauListe(Reseau * R) {
     if (!R) return ;
     
-    int nbN = R -> nbNoeuds;
-    /* Tableau pour tester si un noeud est libere */
-    int tabN[nbN];
-    
-    /* Initialiser ce tableau avec 1 */
-    for (int i = 0 ; i < nbN ; i++) {
-        tabN[i] = 1;
-    }
-    
     /* Liberer les commodites */
     CellCommodite * commoCour = NULL;
     CellCommodite * commoSuiv = R -> commodites;
@@ -259,21 +250,16 @@ void libereReseauListe(Reseau * R) {
         cnCour = cnSuiv;
         cnSuiv = cnSuiv -> suiv;
 
-        /* Liberer le noeud dans cette CellNoeud s'il n'est pas encore libere */
-        if (tabN[(cnCour -> nd -> num) - 1]) {
-            tabN[(cnCour -> nd -> num) - 1] = 0;
-
-            /* Liberer tous les voisins du noeud */
-            voisinSuiv = cnCour -> nd -> voisins;
-            while (voisinSuiv) {
-                voisinCour = voisinSuiv;
-                voisinSuiv = voisinSuiv -> suiv;
-                free(voisinCour);
-            }
-            
-            /* Liberer ce noeud */
-            free(cnCour -> nd);
+        /* Liberer tous les voisins du noeud */
+        voisinSuiv = cnCour -> nd -> voisins;
+        while (voisinSuiv) {
+            voisinCour = voisinSuiv;
+            voisinSuiv = voisinSuiv -> suiv;
+            free(voisinCour);
         }
+            
+        /* Liberer ce noeud */
+        free(cnCour -> nd);
         
         /* Liberer ce CellNoeud */
         free(cnCour);
