@@ -193,22 +193,20 @@ Noeud* rechercheCreeNoeudArbre(Reseau* R, ArbreQuat** a, ArbreQuat* parent, doub
     
     /* Troisieme cas */
     if (x < arbre -> xc && y < arbre -> yc) {
-        rechercheCreeNoeudArbre(R, &(arbre -> so), arbre, x, y);
+        return rechercheCreeNoeudArbre(R, &(arbre -> so), arbre, x, y);
         
     }
     else if (x >= arbre -> xc && y < arbre -> yc) {
-        rechercheCreeNoeudArbre(R, &(arbre -> se), arbre, x, y);
+        return rechercheCreeNoeudArbre(R, &(arbre -> se), arbre, x, y);
         
     }
     else if (x < arbre -> xc && y >= arbre -> yc) {
-        rechercheCreeNoeudArbre(R, &(arbre -> no), arbre, x, y);
+        return rechercheCreeNoeudArbre(R, &(arbre -> no), arbre, x, y);
         
     }
     else {
-        rechercheCreeNoeudArbre(R, &(arbre -> ne), arbre, x, y);
+        return rechercheCreeNoeudArbre(R, &(arbre -> ne), arbre, x, y);
     }
-
-    return NULL;
 }
 
 
