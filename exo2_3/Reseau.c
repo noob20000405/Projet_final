@@ -9,7 +9,7 @@ Noeud* rechercheCreeNoeudListe(Reseau *R, double x, double y) {
   if (!R) return NULL;
 
   CellNoeud * cn = R -> noeuds;
-  /* On parcourt la liste pour trouver ce noeud */
+  /* On parcourt la liste pour trouver le noeud qui correspond aux coordonnees (x,y)*/
   while (cn) {
     if (x == cn -> nd -> x && y == cn -> nd -> y) return cn -> nd;
     cn = cn -> suiv;
@@ -31,7 +31,7 @@ Noeud* rechercheCreeNoeudListe(Reseau *R, double x, double y) {
   return cnAjoute -> nd;
 }
 
-/* Fonction permet d'inserer un noeud dans une liste des voisins */
+/* Fonction qui permet d'inserer un noeud dans une liste des voisins */
 void insereVoisin(CellNoeud ** L, Noeud * n) {
     CellNoeud * voisin = (*L);
     
@@ -112,6 +112,7 @@ int nbCommodites(Reseau *R){
     CellCommodite* k = R -> commodites;
     
     int res = 0;
+    //Nous incrementons le resultat de 1 à chaque tour sur la liste de commodites
     while (k != NULL){
         res++;
         k = k -> suiv;
@@ -132,6 +133,7 @@ int nbLiaisons(Reseau * R){
     while(n != NULL){
         v = n -> nd -> voisins;
         while(v != NULL){
+	    //Sachant qu'un cable apparait 2 fois et que les noeuds sont classes par ordre decroissant, en faisant la comparaison, nous ne prenons pas en compte le doublon
             if( (v -> nd -> num) < (n -> nd -> num)){
                 res++;
             }
@@ -140,7 +142,6 @@ int nbLiaisons(Reseau * R){
         n = n -> suiv;
     }
     return res;
-    
 }
 
 
@@ -163,7 +164,7 @@ void ecrireReseau(Reseau *R, FILE *f){
     }
     fprintf(f, "\n");
     
-    /* On ecrit les liasons */
+    /* On ecrit les liasons (cables) */
     cn = R -> noeuds;
     CellNoeud * voisins = NULL;
     n = NULL;
@@ -182,7 +183,7 @@ void ecrireReseau(Reseau *R, FILE *f){
     }
     fprintf(f, "\n");
     
-    /* On ecrit les cables */
+    /* On ecrit les commodites */
     CellCommodite * k = R -> commodites;
     Noeud * ndA = NULL;
     Noeud * ndB = NULL;
