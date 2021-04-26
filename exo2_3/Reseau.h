@@ -31,21 +31,28 @@ typedef struct {
     CellCommodite *commodites;      /* Liste des commodites a relier */
 } Reseau;
 
-/* Q 2.1 */
+/* Q 2.1 */// Retourne le Noeud du reseau R correspondant au point (x,y) dans la liste chaînée noeuds de R. Si le Noeud correspondant n’est pas dans R, nous le créons et l’ajoutons à R. 
 Noeud* rechercheCreeNoeudListe(Reseau *R, double x, double y);
-/* Q 2.2 */
+
+/* Q 2.2 */// Reconstruit le reseau R a partir de l'ensemble de chaines C
 Reseau* reconstitueReseauListe(Chaines *C);
-/* Q 3.2 */
-void ecrireReseau(Reseau *R, FILE *f);
+
+
 /* Q 3.1 */
-int nbLiaisons(Reseau *R);
+//compte le nombre de commodites du reseau R
 int nbCommodites(Reseau *R);
-/* Q 3.3 */
+//compte le nombre de liaisons (cables) du reseau R
+int nbLiaisons(Reseau *R);
+
+/* Q 3.2 */// Ecrit dans un fichier le contenu d’un reseau R.
+void ecrireReseau(Reseau *R, FILE *f);
+
+/* Q 3.3 *///permet de creer un fichier SVG en html pour visualiser un reseau.
 void afficheReseauSVG(Reseau *R, char* nomInstance);
 
 void libereReseauListe(Reseau * R);
 
-/* Fonction permet d'inserer les voisins dans un noeud */
+// Fonction qui permet d'inserer un noeud dans une liste des voisins
 void insereVoisin(CellNoeud ** L, Noeud * n);
 
 #endif
