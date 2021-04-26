@@ -26,5 +26,5 @@ ChaineMain : ChaineMain.c Chaine.c SVGwriter.c
 	$(CC) $(CFLAGS) -o ChaineMain ChaineMain.c Chaine.c SVGwriter.c
 
 clean : 
-	rm -f graphique main ReconstitueReseau ReorganiseReseau
+	rm -f graphique main ReconstitueReseau ReorganiseReseau ChaineMain
 
