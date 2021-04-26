@@ -14,6 +14,7 @@ int main(int argc, char * argv[]) {
     FILE * fOut = fopen("ecrire_chaines.txt", "w");
     Chaines * c = lectureChaines(fIn);
     ecrireChaines(c, fOut);
+    afficheChainesSVG(c, "chaineSVG");
     
     printf("longueurTotale : %lf\n", longueurTotale(c));
     printf("comptePointsTotal : %d\n", comptePointsTotal(c));
