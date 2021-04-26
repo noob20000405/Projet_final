@@ -21,8 +21,6 @@ typedef struct {
   CellChaine *chaines;          /* La liste chainee des chaines */
 } Chaines;
 
-void libererCellChaine(CellChaine* cc);
-void libererChaines(Chaines* C);
 
 /* Q 1.1 *///Allouer, remplir et retourner une instance de notre structure à partir d’un fichier
 Chaines* lectureChaines(FILE *f);
@@ -44,5 +42,8 @@ int comptePointsTotal(Chaines *C);
 
 /* Q 6.2 */
 Chaines* generationAleatoire(int nbChaines,int nbPointsChaine,int xmax, int ymax);
+
+void libererCellChaine(CellChaine* cc);
+void libererChaines(Chaines* C);
 
 #endif	
