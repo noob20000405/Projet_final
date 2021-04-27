@@ -4,6 +4,7 @@
 
 int main(void){
 
+    /* Test fonctionClef */
     double clef = 0;
     for (int i = 1 ; i <= 10 ; i++){
         for (int j = 1; j <= 10; j++){
@@ -16,6 +17,7 @@ int main(void){
     double cle2 = fonctionClef(115.55,49.89);
     printf("%.2f %.2f\n", cle1, cle2);
 
+    /* Test fonctionHachage */
     int a = fonctionHachage(fonctionClef(19.43,111.11),7);
     int b = fonctionHachage(fonctionClef(109.02,96.32),7);
     int c = fonctionHachage(fonctionClef(115.55,49.89),7);
