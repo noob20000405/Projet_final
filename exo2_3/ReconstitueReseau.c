@@ -10,6 +10,8 @@
 int main(int argc, char * argv[]) {
     if (argc != 3) {
         printf("Nombre de parametres incorrect\n");
+        printf("./ReconstitueReseau [nom de l'instance] [type de structure]\n");
+        printf("1 : liste ; 2 : table hachage ; 3 : arbre\n");
         return 1;
     }
 
