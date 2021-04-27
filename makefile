@@ -11,19 +11,19 @@ OBJ2 = $(SRC2:.c=.o)
 all : graphique main ReconstitueReseau ReorganiseReseau ChaineMain
 
 graphique : graphique.c $(SRC1)
-	$(CC) $(CFLAGS) -o graphique graphique.c $(SRC1)
+	$(CC) $(CFLAGS) -o graphique graphique.c $(SRC1) -lm
 
 main :  main.c $(SRC1)
-	$(CC) $(CFLAGS) -o main main.c $(SRC1)
+	$(CC) $(CFLAGS) -o main main.c $(SRC1) -lm
 
 ReconstitueReseau : ReconstitueReseau.c $(SRC1)
-	$(CC) $(CFLAGS) -o ReconstitueReseau ReconstitueReseau.c $(SRC1)
+	$(CC) $(CFLAGS) -o ReconstitueReseau ReconstitueReseau.c $(SRC1) -lm
 
 ReorganiseReseau : ReorganiseReseau.c 
-	$(CC) $(CFLAGS) -o ReorganiseReseau ReorganiseReseau.c $(SRC2)
+	$(CC) $(CFLAGS) -o ReorganiseReseau ReorganiseReseau.c $(SRC2) -lm
 
 ChaineMain : ChaineMain.c Chaine.c SVGwriter.c
-	$(CC) $(CFLAGS) -o ChaineMain ChaineMain.c Chaine.c SVGwriter.c
+	$(CC) $(CFLAGS) -o ChaineMain ChaineMain.c Chaine.c SVGwriter.c -lm
 
 clean : 
 	rm -f graphique main ReconstitueReseau ReorganiseReseau ChaineMain
