@@ -65,6 +65,10 @@ int main(int argc, char * argv[]){
     libererChaines(c2);
     libererChaines(c3);
     
+    fclose(f1);
+    fclose(f2);
+    fclose(f3);
+
     return 0;
 
 }
