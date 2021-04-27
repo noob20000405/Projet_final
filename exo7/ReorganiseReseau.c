@@ -8,48 +8,62 @@
 #include "Chaine.h"
 #include "Reseau.h"
 
-int main(void){
-    Reseau * r1 = NULL;
-   
-    
-    //Reseau * r2 = NULL;
-    //Reseau * r3 = NULL;
+int main(int argc, char * argv[]){
+    if (argc != 2) {
+        printf("Nombre de parametres incorrect\n");
+        return 1;
+    }
 
-    /* Charger les trois instances */
-    FILE * fIn1 = fopen("00014_burma.cha", "r");
-    
- 
-    //FILE * fIn2 = fopen("05000_USA-road-d-NY.cha", "r");
-    //FILE * fIn3 = fopen("07397_pla.cha", "r");
+    /* Instance du parametre */
+    Reseau * r = NULL;
+    FILE * fIn = fopen(argv[1], "r");
 
-    Chaines * c1 = lectureChaines(fIn1);
+    Chaines * c = lectureChaines(fIn);
     printf("lectureChaines Reussi\n");
 
-    //Chaines * c2 = lectureChaines(fIn2);
-    //Chaines * c3 = lectureChaines(fIn3);
-
-    r1 = reconstitueReseauListe(c1);
+    r = reconstitueReseauListe(c);
     printf("reconstitueReseauListe Reussi\n");
-    //r2 = reconstitueReseauListe(c2);
-    //r3 = reconstitueReseauListe(c3);
 
-    Graphe * g = creerGraphe(r1);
+    Graphe * g = creerGraphe(r);
+    afficherGraphe(g);
     printf("creerGraphe Reussi\n");
 
     int i = plusPetitNbAretes(g, 2, 10);
-    printf("%d",i);
-    
-    int a = reorganiseReseau(r1);
-    printf("reorganiserReseau Reussi\n");
+    printf("plusPetitNbAretes : %d\n",i);
 
-    //int b = reorganiseReseau(r2);
-    //int c = reorganiseReseau(r3);
-    //printf("a = %d, b = %d, c = %d\n", a, b, c);
+    int a = reorganiseReseau(r);
+    printf("reorganiserReseau Reussi\n");
+    printf("reorganiseReseau : %d\n",a);
     
-    printf("a = %d\n",a);
+    libereReseauListe(r);
+    libererChaines(c);
+    libererGraphe(g);
+    
+    fclose(fIn);
+    
+    /* Les trois instances qui sont crees par nous meme */
+    FILE * f1 = fopen("reorganise_instance_1.txt", "r");
+    FILE * f2 = fopen("reorganise_instance_2.txt", "r");
+    FILE * f3 = fopen("reorganise_instance_3.txt", "r");
+    
+    Chaines * c1 = lectureChaines(f1);
+    Chaines * c2 = lectureChaines(f2);
+    Chaines * c3 = lectureChaines(f3);
+    
+    Reseau * r1 = reconstitueReseauListe(c1);
+    Reseau * r2 = reconstitueReseauListe(c2);
+    Reseau * r3 = reconstitueReseauListe(c3);
+    
+    printf("resultat 1 : %d\n", reorganiseReseau(r1));
+    printf("resultat 2 : %d\n", reorganiseReseau(r2));
+    printf("resultat 3 : %d\n", reorganiseReseau(r3));
+    
     libereReseauListe(r1);
-    //libereReseauListe(r2);
-    //libereReseauListe(r3);
+    libereReseauListe(r2);
+    libereReseauListe(r3);
+    libererChaines(c1);
+    libererChaines(c2);
+    libererChaines(c3);
     
     return 0;
 

@@ -130,7 +130,7 @@ Graphe * creerGraphe(Reseau * r){
 
 
 
-/* Q 7.2 */
+//Question 7.2
 int plusPetitNbAretes(Graphe * G, int r, int s){
     //Nous initialisons un tableau visit qui nous donne la longueur de la chaîne de r à visit[i]
     int visit[(G -> nbsom) + 1];
@@ -183,7 +183,7 @@ int plusPetitNbAretes(Graphe * G, int r, int s){
 }
 
 
-/* Q 7.3 */
+//Question 7.3
 ListeEntier * plusCourteChaineUV(Graphe * G, int r, int s){
     //Nous reprennons la fonction plusPetitNbAretes et nous la modifions pour qu'il retourne la chaîne entre r et s
     //Pour cela, nous utiliserons une liste d'entiers, nous la declarons et initialisons
@@ -251,7 +251,7 @@ ListeEntier * plusCourteChaineUV(Graphe * G, int r, int s){
 }
 
 
-/* Q 7.4 */
+//Question 7.4.
 int reorganiseReseau(Reseau * r){
     Graphe * g = creerGraphe(r);
     
@@ -305,7 +305,7 @@ int reorganiseReseau(Reseau * r){
         for(int n = m; n < (g -> nbsom) + 1; n++){
             aretes = matArete[m][n] + matArete[n][m];
             /* test */
-            printf("[%d][%d] : aretes = %d\n", m, n, aretes);
+            /* printf("[%d][%d] : nb aretes = %d\n", m, n, aretes); */
             //Si le nombre est superieur a gamma, on retoune Faux
             if(aretes > g -> gamma){
                 freeMAT(matArete, (g -> nbsom) + 1);
