@@ -46,9 +46,15 @@ int main(int argc, char * argv[]){
     FILE * f2 = fopen("reorganise_instance_2.txt", "r");
     FILE * f3 = fopen("reorganise_instance_3.txt", "r");
     
+    printf("instance 1 : \n");
     Chaines * c1 = lectureChaines(f1);
+    printf("\n");
+    printf("instance 2 : \n");
     Chaines * c2 = lectureChaines(f2);
+    printf("\n");
+    printf("instance 3 : \n");
     Chaines * c3 = lectureChaines(f3);
+    printf("\n");
     
     Reseau * r1 = reconstitueReseauListe(c1);
     Reseau * r2 = reconstitueReseauListe(c2);
