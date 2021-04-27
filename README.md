@@ -22,20 +22,20 @@
 ## exo4
 ### Fichiers fournis :
 - Hachage.c Hachage.h (Q 4.1 - 4.5)
-- HachageMain.c (Q 4.2, Q 4.3 pour tester la fonctionClef et la fonctionHachage)
+- HachageMain.c (Q 4.2, Q 4.3, pour tester la fonctionClef et la fonctionHachage)
 
 ## exo5
 ### Fichiers fouris :
 - ArbreQuat.c ArbreQuat.h (Q 5.1 - 5.5)
 
 ## exo6
-### Fichiers fournis
+### Fichiers fournis :
 - main.c (Q 6.1)
 - Chaine.c Chaine.h (Q 6.2)
 - graphique.c (Q 6.3)
 
 ## exo7
-### Fichiers fournis
+### Fichiers fournis :
 - Graphe.c Graphe.h (Q 7.1 - 7.4)
 - ReorganiseReseau.c (Q 7.5, pour tester Graphe.c)
 - Struct_File.c Struct_File.h / Struct_Liste.c Struct_Liste.h
