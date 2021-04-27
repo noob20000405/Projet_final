@@ -41,25 +41,25 @@ int main(void) {
         fprintf(f2, "%d ", nbChaines);
         
         /* temps de calcul pour la table de hachage */
-        /* taille 50 */
-        temps_initial = clock();
-        r = reconstitueReseauHachage(chaines, 50);
-        temps_final = clock();
-        temps_cpu = ((double)(temps_final - temps_initial)) / CLOCKS_PER_SEC;
-        fprintf(f2, "%f ", temps_cpu);
-        libereReseauListe(r);
-        
-        /* taille 500 */
-        temps_initial = clock();
-        r = reconstitueReseauHachage(chaines, 500);
-        temps_final = clock();
-        temps_cpu = ((double)(temps_final - temps_initial)) / CLOCKS_PER_SEC;
-        fprintf(f2, "%f ", temps_cpu);
-        libereReseauListe(r);
-        
         /* taille 5000 */
         temps_initial = clock();
         r = reconstitueReseauHachage(chaines, 5000);
+        temps_final = clock();
+        temps_cpu = ((double)(temps_final - temps_initial)) / CLOCKS_PER_SEC;
+        fprintf(f2, "%f ", temps_cpu);
+        libereReseauListe(r);
+        
+        /* taille 50000 */
+        temps_initial = clock();
+        r = reconstitueReseauHachage(chaines, 50000);
+        temps_final = clock();
+        temps_cpu = ((double)(temps_final - temps_initial)) / CLOCKS_PER_SEC;
+        fprintf(f2, "%f ", temps_cpu);
+        libereReseauListe(r);
+        
+        /* taille 500000 */
+        temps_initial = clock();
+        r = reconstitueReseauHachage(chaines, 500000);
         temps_final = clock();
         temps_cpu = ((double)(temps_final - temps_initial)) / CLOCKS_PER_SEC;
         fprintf(f2, "%f ", temps_cpu);
