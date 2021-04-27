@@ -11,6 +11,7 @@
 int main(int argc, char * argv[]){
     if (argc != 2) {
         printf("Nombre de parametres incorrect\n");
+        printf("./ReorganiseReseau [nom de l'instance]\n");
         return 1;
     }
 
