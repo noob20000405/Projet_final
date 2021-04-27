@@ -1,8 +1,10 @@
 type_structure    instance_1      instance_2      instance_3
-liste    0.000011      1.938131      9.065808      
-table hachage (taille 15)    0.000007      0.323753      1.213807      
-table hachage (taille 1500)    0.000656      0.019622      0.043938      
-table hachage (taille 3000)    0.000469      0.017777      0.035985      
-table hachage (taille 4500)    0.000481      0.016728      0.033044      
-table hachage (taille 6000)    0.000486      0.015866      0.031118      
-arbre    0.000011      0.033456      0.065897      
+liste    0.000011      1.916493      8.342517      
+table hachage (taille 15)    0.000006      0.232222      0.861925      
+table hachage (taille 150)    0.000456      0.035576      0.109198      
+table hachage (taille 1500)    0.000328      0.016728      0.030361      
+table hachage (taille 3000)    0.000318      0.012219      0.024492      
+table hachage (taille 4500)    0.000323      0.011451      0.022267      
+table hachage (taille 6000)    0.000331      0.010742      0.021010      
+table hachage (taille 15000)    0.000358      0.009919      0.017861      
+arbre    0.000088      0.023664      0.045495      

@@ -79,6 +79,32 @@ int main(void) {
     fprintf(fOut, "%f      \n", temps_cpu);
     libereReseauListe(r);
 
+    /* M = 150 */
+    fprintf(fOut, "table hachage (taille 150)    ");
+    /* Instance 1 : 00014_burma.cha */
+    temps_initial = clock();
+    r = reconstitueReseauHachage(c1, 150);
+    temps_final = clock();
+    temps_cpu = ((double)(temps_final - temps_initial)) / CLOCKS_PER_SEC;
+    fprintf(fOut, "%f      ", temps_cpu);
+    libereReseauListe(r);
+    
+    /* Instance 2 : 05000_USA-road-d-NY.cha */
+    temps_initial = clock();
+    r = reconstitueReseauHachage(c2, 150);
+    temps_final = clock();
+    temps_cpu = ((double)(temps_final - temps_initial)) / CLOCKS_PER_SEC;
+    fprintf(fOut, "%f      ", temps_cpu);
+    libereReseauListe(r);
+    
+    /* Instance 3 : 07397_pla.cha */
+    temps_initial = clock();
+    r = reconstitueReseauHachage(c3, 150);
+    temps_final = clock();
+    temps_cpu = ((double)(temps_final - temps_initial)) / CLOCKS_PER_SEC;
+    fprintf(fOut, "%f      \n", temps_cpu);
+    libereReseauListe(r);
+
     /* M = 1500 */
     fprintf(fOut, "table hachage (taille 1500)    ");
     /* Instance 1 : 00014_burma.cha */
@@ -178,6 +204,32 @@ int main(void) {
     /* Instance 3 : 07397_pla.cha */
     temps_initial = clock();
     r = reconstitueReseauHachage(c3, 6000);
+    temps_final = clock();
+    temps_cpu = ((double)(temps_final - temps_initial)) / CLOCKS_PER_SEC;
+    fprintf(fOut, "%f      \n", temps_cpu);
+    libereReseauListe(r);
+
+    /* M = 15000 */
+    fprintf(fOut, "table hachage (taille 15000)    ");
+    /* Instance 1 : 00014_burma.cha */
+    temps_initial = clock();
+    r = reconstitueReseauHachage(c1, 15000);
+    temps_final = clock();
+    temps_cpu = ((double)(temps_final - temps_initial)) / CLOCKS_PER_SEC;
+    fprintf(fOut, "%f      ", temps_cpu);
+    libereReseauListe(r);
+    
+    /* Instance 2 : 05000_USA-road-d-NY.cha */
+    temps_initial = clock();
+    r = reconstitueReseauHachage(c2, 15000);
+    temps_final = clock();
+    temps_cpu = ((double)(temps_final - temps_initial)) / CLOCKS_PER_SEC;
+    fprintf(fOut, "%f      ", temps_cpu);
+    libereReseauListe(r);
+    
+    /* Instance 3 : 07397_pla.cha */
+    temps_initial = clock();
+    r = reconstitueReseauHachage(c3, 15000);
     temps_final = clock();
     temps_cpu = ((double)(temps_final - temps_initial)) / CLOCKS_PER_SEC;
     fprintf(fOut, "%f      \n", temps_cpu);
