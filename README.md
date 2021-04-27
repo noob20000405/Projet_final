@@ -22,6 +22,7 @@
 ## exo4
 ### Fichiers fournis :
 - Hachage.c Hachage.h (Q 4.1 - 4.5)
+- HachageMain.c (Q 4.2, Q 4.3 pour tester la fonctionClef et la fonctionHachage)
 
 ## exo5
 ### Fichiers fouris :
