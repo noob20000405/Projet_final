@@ -130,7 +130,7 @@ Graphe * creerGraphe(Reseau * r){
 
 
 
-//Question 7.2
+/* Q 7.2 */
 int plusPetitNbAretes(Graphe * G, int r, int s){
     //Nous initialisons un tableau visit qui nous donne la longueur de la chaîne de r à visit[i]
     int visit[(G -> nbsom) + 1];
@@ -183,7 +183,7 @@ int plusPetitNbAretes(Graphe * G, int r, int s){
 }
 
 
-//Question 7.3
+/* Q 7.3 */
 ListeEntier * plusCourteChaineUV(Graphe * G, int r, int s){
     //Nous reprennons la fonction plusPetitNbAretes et nous la modifions pour qu'il retourne la chaîne entre r et s
     //Pour cela, nous utiliserons une liste d'entiers, nous la declarons et initialisons
@@ -251,7 +251,7 @@ ListeEntier * plusCourteChaineUV(Graphe * G, int r, int s){
 }
 
 
-//Question 7.4.
+/* Q 7.4 */
 int reorganiseReseau(Reseau * r){
     Graphe * g = creerGraphe(r);
     
