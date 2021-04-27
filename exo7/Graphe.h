@@ -38,23 +38,25 @@ typedef struct{
   Commod * T_commod; /* Tableau des commodites */
 } Graphe;
 
-/*Nous creons un graphe a partir d'un reseau*/
+/* Q 7.1 *///Nous creons un graphe a partir d'un reseau
 Graphe * creerGraphe(Reseau * r);
 
-/*Nous calculons le plus petit nombre d'aretes d'une chaine entre 2 sommets u et v*/
+/* Q 7.2 *///Nous calculons le plus petit nombre d'aretes d'une chaine entre 2 sommets u et v
 int plusPetitNbAretes(Graphe * G, int r, int s);
 
-/*Nous retournons la plus courte chaine entre les sommets u et v*/
+/* Q 7.3 *///Nous retournons la plus courte chaine entre les sommets u et v
 ListeEntier * plusCourteChaineUV(Graphe * G, int r, int s);
 
-/*Nous créons le graphe, pour chaque commodité nous cherchons sa plus courte chaîne et nous regardons si le nombre gamma est verifiee*/
+/* Q 7.4 *///Nous créons le graphe, pour chaque commodité nous cherchons sa plus courte chaîne et nous regardons si le nombre gamma est verifiee
 int reorganiseReseau(Reseau * r);
 
 /* Afficher le graphe, pour tester */
 void afficherGraphe(Graphe * G);
 
+//Liberer une matrice
 void freeMAT(int ** matrice, int taille);
 
+//Liberer un graphe
 void libererGraphe(Graphe * g);
 
 #endif
