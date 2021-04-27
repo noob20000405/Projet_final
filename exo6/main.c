@@ -53,6 +53,32 @@ int main(void) {
     
 
     /* Table hachage */
+    /* M = 15 */
+    fprintf(fOut, "table hachage (taille 15)    ");
+    /* Instance 1 : 00014_burma.cha */
+    temps_initial = clock();
+    r = reconstitueReseauHachage(c1, 15);
+    temps_final = clock();
+    temps_cpu = ((double)(temps_final - temps_initial)) / CLOCKS_PER_SEC;
+    fprintf(fOut, "%f      ", temps_cpu);
+    libereReseauListe(r);
+    
+    /* Instance 2 : 05000_USA-road-d-NY.cha */
+    temps_initial = clock();
+    r = reconstitueReseauHachage(c2, 15);
+    temps_final = clock();
+    temps_cpu = ((double)(temps_final - temps_initial)) / CLOCKS_PER_SEC;
+    fprintf(fOut, "%f      ", temps_cpu);
+    libereReseauListe(r);
+    
+    /* Instance 3 : 07397_pla.cha */
+    temps_initial = clock();
+    r = reconstitueReseauHachage(c3, 15);
+    temps_final = clock();
+    temps_cpu = ((double)(temps_final - temps_initial)) / CLOCKS_PER_SEC;
+    fprintf(fOut, "%f      \n", temps_cpu);
+    libereReseauListe(r);
+
     /* M = 1500 */
     fprintf(fOut, "table hachage (taille 1500)    ");
     /* Instance 1 : 00014_burma.cha */
