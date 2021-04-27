@@ -235,6 +235,32 @@ int main(void) {
     fprintf(fOut, "%f      \n", temps_cpu);
     libereReseauListe(r);
 
+    /* M = 100000 */
+    fprintf(fOut, "table hachage (taille 100000)    ");
+    /* Instance 1 : 00014_burma.cha */
+    temps_initial = clock();
+    r = reconstitueReseauHachage(c1, 100000);
+    temps_final = clock();
+    temps_cpu = ((double)(temps_final - temps_initial)) / CLOCKS_PER_SEC;
+    fprintf(fOut, "%f      ", temps_cpu);
+    libereReseauListe(r);
+    
+    /* Instance 2 : 05000_USA-road-d-NY.cha */
+    temps_initial = clock();
+    r = reconstitueReseauHachage(c2, 100000);
+    temps_final = clock();
+    temps_cpu = ((double)(temps_final - temps_initial)) / CLOCKS_PER_SEC;
+    fprintf(fOut, "%f      ", temps_cpu);
+    libereReseauListe(r);
+    
+    /* Instance 3 : 07397_pla.cha */
+    temps_initial = clock();
+    r = reconstitueReseauHachage(c3, 100000);
+    temps_final = clock();
+    temps_cpu = ((double)(temps_final - temps_initial)) / CLOCKS_PER_SEC;
+    fprintf(fOut, "%f      \n", temps_cpu);
+    libereReseauListe(r);
+
     
     /* Arbre */
     fprintf(fOut, "arbre    ");
