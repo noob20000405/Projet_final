@@ -15,7 +15,7 @@ int main(int argc, char * argv[]){
         return 1;
     }
 
-    /* Instance du parametre */
+    /* Test l'instance du parametre */
     Reseau * r = NULL;
     FILE * fIn = fopen(argv[1], "r");
 
@@ -25,13 +25,16 @@ int main(int argc, char * argv[]){
     r = reconstitueReseauListe(c);
     printf("reconstitueReseauListe Reussi\n");
 
+    /* Test creerGraphe() */
     Graphe * g = creerGraphe(r);
     afficherGraphe(g);
     printf("creerGraphe Reussi\n");
 
+    /* Test plusPetitNbAretes() */
     int i = plusPetitNbAretes(g, 2, 10);
     printf("plusPetitNbAretes : %d\n",i);
 
+    /* Test reorganiseReseau() */
     int a = reorganiseReseau(r);
     printf("reorganiserReseau Reussi\n");
     printf("reorganiseReseau : %d\n",a);
@@ -42,7 +45,7 @@ int main(int argc, char * argv[]){
     
     fclose(fIn);
     
-    /* Les trois instances qui sont crees par nous meme */
+    /* Test les trois instances qui sont crees par nous meme */
     FILE * f1 = fopen("reorganise_instance_1.txt", "r");
     FILE * f2 = fopen("reorganise_instance_2.txt", "r");
     FILE * f3 = fopen("reorganise_instance_3.txt", "r");
