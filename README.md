@@ -39,4 +39,4 @@
 - Graphe.c Graphe.h (Q 7.1 - 7.4)
 - ReorganiseReseau.c (Q 7.5, pour tester Graphe.c)
 - Struct_File.c Struct_File.h / Struct_Liste.c Struct_Liste.h
-- reorganise_instance_1.txt reorganise_instance_2.txt reorganise_instance_3.txt (les trois instances qui sont utiles dans le lancement de ReorganiseReseau.c)
+- reorganise_instance_1.txt reorganise_instance_2.txt reorganise_instance_3.txt (instances pour tester la fonction ReorganiseReseau)
