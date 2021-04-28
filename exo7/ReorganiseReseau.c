@@ -32,12 +32,16 @@ int main(int argc, char * argv[]){
 
     /* Test plusPetitNbAretes() */
     int i = plusPetitNbAretes(g, 2, 10);
-    printf("plusPetitNbAretes : %d\n",i);
+    printf("plusPetitNbAretes (entre 2 et 10) : %d\n",i);
 
     /* Test reorganiseReseau() */
     int a = reorganiseReseau(r);
     printf("reorganiserReseau Reussi\n");
-    printf("reorganiseReseau : %d\n",a);
+    if (a) {
+        printf("Pour toute arête du graphe, le nombre de chaı̂nes qui passe par cette arête est inférieur à gamma\n\n");
+    } else {
+        printf("Il existe au moin une arete du graphe, telle que le nombre de chaı̂nes qui passe par cette arête est superieur à gamma\n\n");
+    }
     
     libereReseauListe(r);
     libererChaines(c);
@@ -64,9 +68,10 @@ int main(int argc, char * argv[]){
     Reseau * r2 = reconstitueReseauListe(c2);
     Reseau * r3 = reconstitueReseauListe(c3);
     
-    printf("resultat 1 : %d\n", reorganiseReseau(r1));
-    printf("resultat 2 : %d\n", reorganiseReseau(r2));
-    printf("resultat 3 : %d\n", reorganiseReseau(r3));
+    printf("Résultat retourné par la fonction reorganiseReseau() : \n");
+    printf("pour l'instance 1 : %d\n", reorganiseReseau(r1));
+    printf("pour l'instance 2 : %d\n", reorganiseReseau(r2));
+    printf("pour l'instance 3 : %d\n", reorganiseReseau(r3));
     
     libereReseauListe(r1);
     libereReseauListe(r2);
@@ -80,5 +85,4 @@ int main(int argc, char * argv[]){
     fclose(f3);
 
     return 0;
-
 }
