@@ -20,8 +20,8 @@ int main(int argc, char * argv[]) {
     Chaines * c = lectureChaines(fIn);
     int methode = atoi(argv[2]);
     Reseau * r = NULL;
-    
-    /* 1 pour tester la liste chainee, 2 pour la table hachage et 3 pour l'arbre */
+
+    /* 1 pour tester la liste chainee, 2 pour la table hachage et 3 pour l'arbre quaternaire*/
     switch (methode) {
         case 1:
             fOut = fopen("reseauListe.txt", "w");
@@ -45,7 +45,7 @@ int main(int argc, char * argv[]) {
             libereReseauListe(r);
             break;
     }
-    
+
     libererChaines(c);
     fclose(fIn);
     fclose(fOut);
