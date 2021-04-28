@@ -7,15 +7,15 @@
 #include "SVGwriter.h"
 
 /* Q 1.1 */
-Chaines* lectureChaines(FILE * f){  
+Chaines* lectureChaines(FILE * f){
   char buf[5000];
   //Variables declarees pour la lecture de la structure Chaines
   double x, y;
-  int nbPoints; 
-  int num; 
-  int gamma, nbChaines; 
-  
-  //Création l'ensemble de chaînes 
+  int nbPoints;
+  int num;
+  int gamma, nbChaines;
+
+  //Création l'ensemble de chaînes
   Chaines *C = (Chaines *) malloc(sizeof(Chaines));
   if(!C){ //Test malloc
     printf("Erreur lors de l'allocation Chaines.\n");
@@ -24,42 +24,42 @@ Chaines* lectureChaines(FILE * f){
   fgets(buf, 5000, f);
   buf[strlen(buf) - 1] = '\0';
   sscanf(buf, "NbChain: %d", &nbChaines);
-  
+
   fgets(buf, 5000, f);
   buf[strlen(buf) - 1] = '\0';
   sscanf(buf, "Gamma: %d", &gamma);
- 
+
   C -> nbChaines = nbChaines;
   C -> gamma = gamma;
   C -> chaines = NULL;
- 
+
   //Boucle pour lecture de chaines (CellChaine)
   for(int i = 0; i < C -> nbChaines; i++){
     //Nous gardons dans cette variable la suite de la ligne qui n'a pas encore ete lu avec c
-    char points[5000]; 
-    
-    //Création de liste chainee de chaines 
+    char points[5000];
+
+    //Création de liste chainee de chaines
     CellChaine* cc = (CellChaine*)malloc(sizeof(CellChaine));
     if(!cc){ //Test malloc
       printf("Erreur lors de l'allocation CellChaine.\n");
       libererChaines(C);
       return NULL;
     }
-    
+
     //Nous lisons les deux premiers variables pour pouvoir determiner la boucle qui lit les CellPoint
     fgets(buf, 5000, f);
     buf[strlen(buf) - 1] = '\0';
     sscanf(buf, "%d %d %[^\n]\n", &num, &nbPoints, points);
     printf("%d %d ", num, nbPoints);/* Test */
-    
+
     cc -> numero = num;
     cc -> points = NULL;
-    
+
     //lecture de points
     for(int j = 0; j < nbPoints ; j++){
       sscanf(points, "%lf %lf %[^\n]\n", &x, &y, points);
       printf("%.2f %.2f ", x, y); /* Test */
-       
+
       //Création de points (CellPoint)
       CellPoint* cp = (CellPoint*)malloc(sizeof(CellPoint));
       if(!cp){ //Test malloc
@@ -70,16 +70,16 @@ Chaines* lectureChaines(FILE * f){
       }
       cp -> x = x;
       cp -> y = y;
-      
+
       //Insertion dans la liste de points
       cp -> suiv = cc -> points;
       cc -> points = cp;
     }
-    
+
     //Insertion dans la liste des chaines
     cc -> suiv = C -> chaines;
     C -> chaines = cc;
-    
+
     printf("\n"); /* Test */
   }
     return C;
@@ -89,13 +89,13 @@ Chaines* lectureChaines(FILE * f){
 /* Q 1.2 */
 void ecrireChaines(Chaines * C, FILE * f) {
   if (!C || !f) return ;
-  
+
   fprintf(f, "NbChaine: %d\nGamma: %d\n", C -> nbChaines, C -> gamma);
-  
+
   CellChaine * cc = C -> chaines;
   CellPoint * cp = NULL;
   int nbP; // Nombre des points dans une chaine
-  
+
   while (cc) {
     cp = cc -> points;
     nbP = 0;
@@ -105,7 +105,7 @@ void ecrireChaines(Chaines * C, FILE * f) {
       cp = cp -> suiv;
     }
     fprintf(f, "%d %d ", cc -> numero, nbP);
-    
+
     /* On parcourt une deuxieme fois pour ecrire les coordonnees */
     cp = cc -> points;
     while (cp) {
@@ -132,7 +132,7 @@ void afficheChainesSVG(Chaines *C, char* nomInstance){
             if (maxx<pcour->x) maxx=pcour->x;
             if (maxy<pcour->y) maxy=pcour->y;
             if (minx>pcour->x) minx=pcour->x;
-            if (miny>pcour->y) miny=pcour->y;  
+            if (miny>pcour->y) miny=pcour->y;
             pcour=pcour->suiv;
         }
     ccour=ccour->suiv;
@@ -142,15 +142,15 @@ void afficheChainesSVG(Chaines *C, char* nomInstance){
     while (ccour!=NULL){
         pcour=ccour->points;
         SVGlineRandColor(&svg);
-        SVGpoint(&svg,500*(pcour->x-minx)/(maxx-minx),500*(pcour->y-miny)/(maxy-miny)); 
+        SVGpoint(&svg,500*(pcour->x-minx)/(maxx-minx),500*(pcour->y-miny)/(maxy-miny));
         precx=pcour->x;
-        precy=pcour->y;  
+        precy=pcour->y;
         pcour=pcour->suiv;
         while (pcour!=NULL){
             SVGline(&svg,500*(precx-minx)/(maxx-minx),500*(precy-miny)/(maxy-miny),500*(pcour->x-minx)/(maxx-minx),500*(pcour->y-miny)/(maxy-miny));
             SVGpoint(&svg,500*(pcour->x-minx)/(maxx-minx),500*(pcour->y-miny)/(maxy-miny));
             precx=pcour->x;
-            precy=pcour->y;    
+            precy=pcour->y;
             pcour=pcour->suiv;
         }
         ccour=ccour->suiv;
@@ -164,10 +164,10 @@ double longueurChaine(CellChaine * c) {
   if (!c) return 0;
   CellPoint * cp_cur = c -> points;
   CellPoint * cp_suiv = cp_cur -> suiv;
-  
+
   /* Longueur qu'on va retourner */
   double lg = 0;
-  
+
   while (cp_suiv) {
     lg += sqrt(pow((cp_suiv -> x) - (cp_cur -> x), 2) + pow((cp_suiv -> y) - (cp_cur -> y), 2));
     cp_cur = cp_suiv;
@@ -181,7 +181,7 @@ double longueurTotale(Chaines *C) {
   if (!C) return 0;
   CellChaine * cc = C -> chaines;
   double lg = 0;
-  
+
   while (cc) {
     lg += longueurChaine(cc);
     cc = cc -> suiv;
@@ -201,7 +201,7 @@ int comptePointsTotal(Chaines *C) {
   CellPoint * cp_cmp = NULL;
   CellPoint * cp_cmp_debut = cp_cmp;
   int compte = 0; /* Ce parametre represente si un point est deja compte une fois */
-  
+
   while (cc) {
     cp = cc -> points;
     while (cp) {
@@ -247,10 +247,10 @@ Chaines* generationAleatoire(int nbChaines,int nbPointsChaine,int xmax, int ymax
     cs -> gamma = 0;////////
     cs -> nbChaines = nbChaines;
     cs -> chaines = NULL;
-    
+
     CellChaine * cc = NULL;
     CellPoint * cp = NULL;
-    
+
     /* Creer chaque chaine avec les valeurs aleatoires */
     for (int i = 0 ; i < nbChaines ; i++) {
         cc = (CellChaine *)malloc(sizeof(CellChaine));
@@ -258,7 +258,7 @@ Chaines* generationAleatoire(int nbChaines,int nbPointsChaine,int xmax, int ymax
         cc -> points = NULL;
         cc -> suiv = cs -> chaines;
         cs -> chaines = cc;
-        
+
         /* Creer aleatoirement les points dans la chaine */
         for (int j = 0 ; j < nbPointsChaine ; j++) {
             cp = (CellPoint *)malloc(sizeof(CellPoint));
@@ -276,7 +276,7 @@ void libererCellChaine(CellChaine * cc){
   if(!cc){
     return;
   }
-  
+
   CellPoint * cpCour = cc -> points;
   CellPoint * cpPrec;
 
@@ -285,7 +285,7 @@ void libererCellChaine(CellChaine * cc){
     cpCour = cpCour -> suiv;
     free(cpPrec);
   }
-  
+
   free(cc);
   return;
 }
@@ -302,7 +302,7 @@ void libererChaines(Chaines* C){
     ccCour = ccCour -> suiv;
     libererCellChaine(ccPrec);
   }
-  
+
   free(C);
   return;
 }

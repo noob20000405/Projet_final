@@ -1,5 +1,5 @@
 #ifndef __CHAINE_H__
-#define __CHAINE_H__	
+#define __CHAINE_H__
 
 /* Liste chainee de points */
 typedef struct cellPoint{
@@ -46,4 +46,4 @@ Chaines* generationAleatoire(int nbChaines,int nbPointsChaine,int xmax, int ymax
 void libererCellChaine(CellChaine* cc);
 void libererChaines(Chaines* C);
 
-#endif	
+#endif
