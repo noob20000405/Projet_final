@@ -4,6 +4,12 @@
 ### Fichier fourni : makefile
 ### Commande : make -B
 
+## Répertoires supplémentaires
+### test_memoire
+- Les captures d'écran des tests *valgrind*
+### test_html
+- Les fichiers html obtenus par les fonctions afficherSVG
+
 ## Instances fournies :
 - 00014_burma.cha
 - 05000_USA-road-d-NY.cha
